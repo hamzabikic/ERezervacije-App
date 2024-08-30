@@ -1,0 +1,41 @@
+<div id="registracija-div">
+  <img src="assets/logo-no-background.png" routerLink="">
+  <a id="greska" >{{greska}}</a>
+  <div class="inputi">
+    <label>Ime:</label>
+    <input [(ngModel)]="ime" (change)="provjeraPolja($event)">
+  </div>
+  <div class="inputi">
+    <label>Prezime:</label>
+    <input [(ngModel)]="prezime" (change)="provjeraPolja($event)">
+  </div>
+  <div class="inputi">
+    <label>Datum rodjenja:</label>
+    <input [(ngModel)]="datumRodjenja" type="date">
+  </div>
+  <div class="inputi">
+  <label>Grad:</label>
+  <select [(ngModel)]="grad">
+    <option id="gradovi" *ngFor="let x of listaGradova" value="{{x.gradID}}">{{x.naziv}}</option>
+  </select>
+  </div>
+  <div class="inputi">
+    <label>Email:</label>
+    <input id="email" [(ngModel)]="email" (change)="provjeraPolja($event);provjeraEmaila()">
+  </div>
+  <div class="inputi">
+    <label>Broj telefona:</label>
+    <input id="brojTelefona" [(ngModel)]="brojTelefona" (change)="provjeraPolja($event);provjeraTelefona()">
+  </div>
+  <div class="inputi">
+    <label>Username:</label>
+    <input id="username" [(ngModel)]="username" (change)="provjeraPolja($event);provjeraUsername()">
+  </div>
+  <div class="inputi">
+    <label>Password:</label>
+    <input [(ngModel)]="password" type="password" (change)="provjeraPolja($event)">
+  </div>
+  <button (click)="registracija()">Registruj se</button>
+</div>
+
+

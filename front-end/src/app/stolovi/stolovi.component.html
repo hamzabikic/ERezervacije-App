@@ -1,0 +1,130 @@
+
+<div id="sve">
+  <h5 style="color:white;margin-bottom:20px;">Upravljanje stolovima</h5>
+  <button id="dodaj" class="btn btn-light" (click)="dialog_novo=!dialog_novo;ocistiPolja()"><b>Dodaj ograničenje</b></button>
+<table *ngIf="vidljiva_tabela"  class="table">
+  <thead>
+  <tr>
+    <th scope="col">#</th>
+    <th scope="col">Početak</th>
+    <th scope="col">Završetak</th>
+    <th *ngIf="vidljiviStolovi" scope="col">Stolovi</th>
+    <th scope="col"></th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let z of zabrane">
+    <th scope="row">{{z.zabranaId}}</th>
+    <td>{{z.pocetakDatum}} {{z.vrijemeOd}}</td>
+    <td>{{z.krajDatum}} {{z.vrijemeDo}}</td>
+    <td *ngIf="vidljiviStolovi">{{getStoloviBrojevi(z.stolovi).join(", ")}}</td>
+    <td>
+      <button style="color:white" id="detalji" class="btn btn-info" (click)="dialog_detalji=!dialog_detalji;zabrana=z;">Detalji</button>
+      <button (click)="obrisiOgranicenje(z.zabranaId)" class="btn btn-danger">Obriši</button>
+    </td>
+  </tr>
+  </tbody>
+</table>
+  <div *ngIf="!vidljiva_tabela" id="ogranicenja-div">
+    <div class="ogranicenje" *ngFor="let z of zabrane">
+      <label><b>ID ograničenja:</b> {{z.zabranaId}}</label>
+      <label><b>Početak:</b> {{z.pocetakDatum}} {{z.vrijemeOd}}</label>
+      <label><b>Završetak:</b> {{z.krajDatum}} {{z.vrijemeDo}}</label>
+      <label><b>Stolovi:</b> {{getStoloviBrojevi(z.stolovi)}}</label>
+      <div id="buttoni-div">
+        <button style="color:white;" class="btn btn-info" (click)="dialog_detalji=!dialog_detalji;zabrana=z;">Detalji</button>
+        <button (click)="obrisiOgranicenje(z.zabranaId)" class="btn btn-danger">Obriši</button>
+      </div>
+    </div>
+  </div>
+</div>
+<div *ngIf="dialog_novo" style="display:block" class="modal" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header" >
+        <h5 style="margin:0" class="modal-title">Novo ogranicenje</h5>
+        <button (click)="dialog_novo=!dialog_novo" type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <h5 *ngIf="greska!='';" style="color:red; text-align:center;margin:0;">{{greska}}</h5>
+        <div>
+          <div class="form-group">
+            <label >Datum početka:</label>
+            <input (change)="preuzmiStolove()" [(ngModel)]="datumPocetak" type="date" class="form-control">
+          </div>
+          <div class="form-group">
+            <label >Od:</label>
+            <select (change)="preuzmiStolove()" [(ngModel)]="odSati"  class="form-control">
+              <option *ngFor="let s of odLista" [ngValue]="s">{{formatirajBroj(s)}}:00</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label >Datum završetka:</label>
+            <input (change)="preuzmiStolove()" [(ngModel)]="datumKraj" type="date" class="form-control">
+          </div>
+          <div class="form-group">
+            <label >Do:</label>
+            <select (change)="preuzmiStolove()" [(ngModel)]="doSati"  class="form-control">
+              <option *ngFor="let s of doLista" [ngValue]="s">{{formatirajBroj(s)}}:00</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label >Odaberi stolove:</label>
+            <select [disabled]="svi_stolovi" style="height:150px;" multiple [(ngModel)]="odabraniStolovi" class="form-control">
+              <option *ngFor="let s of slobodniStolovi" value="{{s.stolID}}">
+                Stol: {{s.brojStola}} , Stolice: {{s.brojStolica}}, Pusenje: {{s.jePusackaZona? "DA":"NE"}},
+                Terasa: {{!s.jeUnutra ? "DA":"NE"}}</option>
+            </select>
+          </div>
+          <div class="form-check">
+            <input [(ngModel)]="svi_stolovi" (click)="odabraniStolovi=[];" class="form-check-input" type="checkbox" value="" id="flexCheckChecked" >
+            <label class="form-check-label" for="flexCheckChecked">
+              Svi stolovi
+            </label>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button (click)="dialog_novo=!dialog_novo" style="border:none" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Zatvori</button>
+        <button id="dugme" (click)="posaljiZabranu()"  type="button" class="btn btn-primary">Kreiraj</button>
+      </div>
+    </div>
+  </div>
+</div>
+<div *ngIf="dialog_detalji" class="modal" tabindex="-1" style="display:block;">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 style="margin:0;" class="modal-title">Detalji o ograničenju</h5>
+        <button (click)="dialog_detalji=!dialog_detalji" type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <h6><b>ID ograničenja</b>: {{zabrana?.zabranaId}}</h6>
+        <h6><b>Početak:</b> {{zabrana?.pocetakDatum}} {{zabrana?.vrijemeOd}}</h6>
+        <h6><b>Završetak:</b> {{zabrana?.krajDatum}} {{zabrana?.vrijemeDo}}</h6>
+        <h6><b>Stolovi:</b></h6>
+        <table class="table">
+          <thead>
+          <tr>
+            <th scope="col">Broj stola</th>
+            <th scope="col">Unutrašnji dio</th>
+            <th scope="col">Pušačka zona</th>
+            <th scope="col">Broj stolica</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let s of zabrana?.stolovi ?? []">
+            <th scope="row">{{s.brojStola}}</th>
+            <td>{{s.jeUnutra ? 'DA':'NE' }}</td>
+            <td>{{ s.jePusackaZona ? 'DA' : 'NE' }}</td>
+            <td>{{s.brojStolica}}</td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="modal-footer">
+        <button (click)="dialog_detalji=!dialog_detalji" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Zatvori</button>
+      </div>
+    </div>
+  </div>
+</div>

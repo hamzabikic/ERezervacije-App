@@ -1,0 +1,14 @@
+<div *ngIf="omoguceno" id="login-div">
+  <img src="assets/logo-no-background.png">
+  <a id="greska" >{{greska}}</a>
+  <div class="inputi">
+    <label>Nova lozinka:</label>
+    <input (keydown.enter)="promijeniLozinku()" [(ngModel)]="lozinka" type="password">
+  </div>
+  <div class="inputi">
+    <label>Ponovi lozinku:</label>
+    <input (keydown.enter)="promijeniLozinku()" [(ngModel)]="ponovo_lozinka" type="password">
+  </div>
+  <button (click)="promijeniLozinku()">Promijeni lozinku</button>
+</div>
+

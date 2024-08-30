@@ -1,0 +1,101 @@
+#sve {
+  width:90%;
+  margin-left:auto;
+  margin-right:auto;
+  position:relative;
+}
+table {
+  margin-top:10px;
+}
+label {
+  margin-right:10px;
+}
+h5 {
+  margin-bottom:20px;
+}
+table button{
+  margin-right:10px;
+}
+#sacuvaj-btn , #sacuvaj-btn2{
+  background-color: rgb(115,82,1);
+  color:white;
+  border:none;
+}
+.profilna {
+  width:130px;
+  height:120px;
+  margin-top:10px;
+  margin-bottom:10px;
+}
+
+#gosti {
+  background-color: white;
+  max-height:690px;
+  height:690px;
+  overflow: scroll;
+}
+.gost-polje {
+  width:100%;
+}
+.gost{
+  padding:10px;
+  border-bottom:1px solid black;
+}
+#podaci {
+  width:70%;
+}
+#buttoni {
+  width:100%;
+}
+#slika_mobilni{
+  width:30%;
+  margin-top:25px;
+}
+#buttoni {
+  display:flex;
+  gap:10px;
+  margin-top:5px;
+}
+@media (max-width:580px) {
+  #podaci {
+    width:100%;
+  }
+  #slika_mobilni{
+    display:none;
+  }
+  #buttoni {
+    justify-content: center;
+  }
+}
+@media (max-width:480px){
+  #novaHostesa {
+    left:0;
+    width:fit-content;
+  }
+  #lblime {
+    margin-top:50px;
+  }
+}
+@media (max-width:415px) {
+  #buttoni button {
+    font-size:14px;
+  }
+}
+@media (max-width:380px) {
+  #buttoni{
+    gap:5px;
+  }
+}
+@media (max-width:364px) {
+  #buttoni button {
+    font-size:12px;
+  }
+}
+#novaHostesa{
+  position:absolute;
+  right:0;
+  top:40px;
+  background-color: white;
+  font-weight: bolder;
+  border:none;
+}

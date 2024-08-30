@@ -1,0 +1,321 @@
+#glavni {
+  width:80%;
+  margin-left:auto;
+  margin-right:auto;
+  height:785px;
+  margin-bottom:20px;
+}
+#podaci {
+  width:40%;
+  float:left;
+  height:330px;
+  max-height:330px;
+}
+#info {
+  width:100%;
+  background-color: white;
+  padding-top:20px;
+  padding-bottom:30px;
+  height:300px;
+  max-height:300px;
+  position:relative;
+}
+.naslov {
+  color:white;
+  text-align:center;
+}
+#glavni {
+  margin-top:30px;
+}
+.pored-polja {
+  width:40%;
+  text-align:right;
+  padding-right:3%;
+  box-sizing: border-box;
+  white-space:nowrap;
+}
+.polje {
+  float:right;
+  width:60%;
+  white-space:nowrap;
+}
+#rezervacije-div {
+  height:785px;
+  width:40%;
+  margin-left:20%;
+  float:right;
+  max-height: 785px;
+}
+#rezervacije {
+  background-color: white;
+  max-height:703px;
+  height:703px;
+  overflow: scroll;
+
+}
+#popusti-div {
+  height:435px;
+  width:40%;
+  float:left;
+  margin-top:20px;
+}
+#popusti {
+  height:360px;
+  width:100%;
+  background-color: white;
+  max-height:360px;
+  overflow: scroll;
+}
+.popust {
+  border-bottom:1px solid black;
+  padding:10px;
+}
+.rezervacija-polje {
+  width:50%;
+}
+.rezervacija {
+  padding:10px;
+  border-bottom:1px solid black;
+}
+
+#buttoni{
+  display:flex;
+  justify-content: center;
+  gap:2%;
+  margin-top:10px;
+}
+
+#zvjezdice span {
+  width:30px;
+  height:30px;
+}
+.checked {
+  color: orange;
+}
+textarea {
+  width:100%;
+  height:100px;
+}
+#upozorenje {
+  color:red;
+}
+td, th {
+  text-align: center;
+}
+.pretraga label {
+  color:white;
+  margin-right:10px;
+}
+.pretraga {
+  width:fit-content;
+}
+.popust-ime {
+  width:70%;
+}
+.popust-id {
+  width:30%;
+  text-align: right;
+}
+.popust-polje {
+  width:100%;
+}
+#iskoristi {
+  width:fit-content;
+  height:fit-content;
+  margin-left:auto;
+  margin-right:auto;
+  display:block;
+  margin-top:10px;
+}
+.dugme {
+  border:0;
+  padding-left:15px;
+  padding-right:15px;
+  padding-top:5px;
+  padding-bottom:5px;
+  font-weight: bolder;
+  border-radius:5%;
+  background-color: rgb(115,82,1);
+  color:white;
+}
+#promjena-button {
+  position:absolute;
+  right:5%;
+  top:250px;
+}
+
+#iznad_rezervacija {
+  display:flex;
+  gap:10px;
+  justify-content: center;
+  margin-top:10px;
+  margin-bottom:10px;
+}
+#sacuvaj-btn2{
+  background-color: rgb(115,82,1);
+  color:white;
+  border:none;
+}
+#pretraga {
+  width:fit-content;
+  color:white;
+  margin-left:auto;
+  margin-right:auto;
+  margin-bottom:10px;
+  margin-top:10px;
+}
+#pretraga label {
+  margin-right:10px;
+  color:white;
+}
+@media (max-height:799px) {
+  #glavni {
+    height:685px;
+  }
+  #rezervacije-div {
+    height:685px;
+    max-height: 685px;
+  }
+  #rezervacije {
+    max-height:603px;
+    height:603px;
+  }
+  #popusti-div {
+    height:335px;
+  }
+  #popusti {
+    height:260px;
+    max-height:260px;
+  }
+}
+@media (max-width:1320px) {
+  #glavni {
+    width:95%;
+  }
+}
+@media (max-width:1130px) {
+  #podaci {
+    width:45%;
+  }
+  #rezervacije-div {
+    width:45%;
+    margin-left:10%;
+  }
+  #popusti-div {
+    width:45%;
+  }
+}
+
+@media (max-width:940px) {
+  #podaci {
+    width:60%;
+    float:none;
+    margin-left:auto;
+    margin-right:auto;
+  }
+  #rezervacije-div {
+    width:60%;
+    margin-left:auto;
+    margin-right:auto;
+    float:none;
+    margin-top:20px;
+  }
+  #popusti-div {
+    width:60%;
+    float:none;
+    margin-left:auto;
+    margin-right:auto;
+  }
+  #glavni{
+    height:1590px;
+  }
+  @media (max-height:799px) {
+    #glavni{
+      height:1390px;
+    }
+  }
+}
+@media (max-width:750px) {
+  #podaci {
+    width:80%;
+  }
+  #rezervacije-div {
+    width:80%;
+  }
+  #popusti-div {
+    width:80%;
+  }
+}
+@media (max-width:580px) {
+  #podaci {
+    width:100%;
+  }
+  #rezervacije-div {
+    width:100%;
+  }
+  #popusti-div {
+    width:100%;
+  }
+}
+@media (max-width:450px) {
+  .rezervacija-polje{
+    width:100%;
+  }
+  .pored-polja {
+    width:45%;
+  }
+  .polje {
+    width:55%;
+  }
+  #info {
+    overflow:scroll;
+  }
+}
+@media (max-width:430px) {
+  .popust-id {
+    width:100%;
+    text-align: left;
+  }
+  .popust-ime {
+    width:100%;
+  }
+  #iznad_rezervacija {
+    display:flex;
+    gap:5px;
+    flex-direction: column-reverse;
+    justify-content: center;
+  }
+  #nova_rez {
+    width:fit-content;
+    margin-left:auto;
+    margin-right:auto;
+  }
+  .pretraga {
+    margin-left:auto;
+    margin-right:auto;
+  }
+  #popusti-div {
+    margin-top:60px;
+  }
+  #glavni {
+    height: 1630px;
+  }
+  @media (max-height:799px) {
+    #glavni {
+      height: 1430px;
+    }
+  }
+}
+@media (max-width:390px) {
+  .pored-polja {
+    width:50%;
+  }
+  .polje {
+    width:50%;
+  }
+  #sve {
+    width:99%;
+  }
+}
+
+

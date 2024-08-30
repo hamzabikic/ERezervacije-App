@@ -1,0 +1,83 @@
+button {
+  border:0;
+  padding-left:15px;
+  padding-right:15px;
+  padding-top:5px;
+  padding-bottom:5px;
+  font-weight: bolder;
+  border-radius:5%;
+  background-color: rgb(115,82,1);
+  color:white;
+}
+#login-div{
+  width:529px;
+  background-color: white;
+  position:fixed;
+  left:calc(50% - 264.5px);
+  top:calc(50% - 170px);
+  height:fit-content;
+  padding-bottom:15px;
+}
+#login-div img {
+  height:70px;
+  width:240px;
+  display:block;
+  margin:auto;
+  margin-top:10px;
+  margin-bottom:10px;
+  cursor:pointer;
+}
+.inputi{
+  margin:auto;
+  width:fit-content;
+  margin-top:15px;
+}
+label{
+  margin-right:5px;
+  color:rgb(115,82,1);
+  width:80px;
+}
+button {
+  margin:auto;
+  display:block;
+  margin-top:20px;
+  margin-bottom:5px;
+}
+a {
+  display:block;
+  margin:auto;
+  margin-top:0;
+  width:fit-content;
+  color:blue;
+  cursor:pointer;
+}
+#greska {
+  margin-top:0;
+  margin-bottom:0;
+  height:15px;
+  color:darkred;
+}
+@media (max-width:649px) {
+  #login-div{
+    width:450px;
+    left:calc(50% - 225px);
+  }
+}
+@media (max-width:480px) {
+  #login-div{
+    width:400px;
+    left:calc(50% - 200px);
+  }
+  #login-div img {
+    height:60px;
+    width:200px;
+    margin-bottom:0;
+  }
+  a {
+    margin-top:0;
+    font-size: 14px;
+  }
+  .inputi{
+    margin-top:10px;
+  }
+}

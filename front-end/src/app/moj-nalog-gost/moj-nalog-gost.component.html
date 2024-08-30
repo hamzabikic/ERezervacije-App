@@ -1,0 +1,295 @@
+<div id="glavni">
+
+  <div id="podaci">
+    <h5 class="naslov">Podaci o nalogu:</h5>
+    <div id="info">
+      <label class="pored-polja"> <b>Ime:</b></label>
+      <div class="polje">{{korisnik!.ime}}</div>
+      <label class="pored-polja"> <b>Prezime:</b></label>
+      <div class="polje">{{korisnik!.prezime}}</div>
+      <label class="pored-polja"> <b>Datum rođenja:</b></label>
+      <div class="polje">{{korisnik!.datumRodjenja.toString().split('T')[0]}}</div>
+      <label class="pored-polja"> <b>Grad:</b></label>
+      <div class="polje">{{korisnik!.grad.naziv}}</div>
+      <label class="pored-polja"> <b>E-mail:</b></label>
+      <div class="polje">{{korisnik!.email}}</div>
+      <label class="pored-polja"> <b>Username:</b></label>
+      <div class="polje">{{korisnik!.username}}</div>
+      <label class="pored-polja"> <b>Broj telefona:</b></label>
+      <div class="polje">{{korisnik!.brojTelefona}}</div>
+      <label class="pored-polja"> <b>Broj rezervacija:</b></label>
+      <div class="polje">{{korisnik!.brojRezervacija}}</div>
+      <label class="pored-polja" id="ver_email"> <b>Verifikovan e-mail:</b></label>
+      <div class="polje" id="ver_email2"><span [ngStyle]="boolstyle(korisnik!.verifikovanEmail)" ><b>{{korisnik!.verifikovanEmail ? "Da" : "Ne"}}</b> </span> <a style="color:darkblue;cursor:pointer;margin-left:10%;" *ngIf="!korisnik?.verifikovanEmail" (click)="verifikujEmail()"><b>Verifikuj</b></a></div>
+      <label class="pored-polja" id="ver_tel"> <b>Verifikovan telefon:</b></label>
+      <div class="polje" id="ver_tel2"><span [ngStyle]="boolstyle(korisnik!.verifikovanTelefon)" > <b>{{korisnik!.verifikovanTelefon ?"Da" : "Ne"}}</b>  </span> <a  style="color:darkblue;cursor:pointer;margin-left:10%;" *ngIf="!korisnik?.verifikovanTelefon;" (click)="otvoriVerifikaciju()"><b>Verifikuj</b></a></div>
+      <button class="dugme" id="izmjena" (click)="dialog_edit=!dialog_edit;upozorenje='';popuni();">Izmijeni podatke</button>
+      <button class="dugme" id="promjena-btn"   (click)="dialog_lozinka=!dialog_lozinka; novaLozinka='';staraLozinka='';lozinka_upozorenje='';
+" >Promijeni lozinku</button>
+    </div>
+  </div>
+  <div id="rezervacije-div">
+    <h5 class="naslov">Moje rezervacije:</h5>
+   <div id="rezervacije">
+     <div *ngFor="let r of rezervacije" class="rezervacija" [ngStyle]="pozadina(r.otkazana,r.ponistena,r.preuzeta)">
+       <label class="rezervacija-polje"><b>ID rezervacije:</b> {{r.rezervacijaID}}</label>
+       <label class="rezervacija-polje"><b>Datum:</b> {{r.datumRezervacije}}</label>
+       <label class="rezervacija-polje"><b>Vrijeme:</b> {{r.vrijemeRezervacije}}</label>
+       <label class="rezervacija-polje"><b>Stolovi:</b> {{r.stolovi.join(", ")}}</label>
+       <label  class="rezervacija-polje"><b>Odobrena:</b> <span [ngStyle]="boolstyle(r.odobrena)"> <b> {{r.odobrena ?'DA':'NE'}}</b></span></label>
+       <label class="rezervacija-polje"><b>Preuzeta:</b> <span [ngStyle]="boolstyle(r.preuzeta)"> <b> {{r.preuzeta ?'DA':'NE'}}</b></span></label>
+       <label class="rezervacija-polje"><b>Otkazana:</b> <span [ngStyle]="boolstyle(r.otkazana)"> <b> {{r.otkazana ?'DA':'NE'}}</b></span></label>
+       <label class="rezervacija-polje"><b>Odbijena:</b> <span [ngStyle]="boolstyle(r.ponistena)"> <b> {{r.ponistena ?'DA':'NE'}}</b></span></label>
+       <div id="buttoni">
+       <button  (click)="preuzmiDetalje(r.rezervacijaID)" id="button-uredi" style="color:white;" class="btn btn-info">Detalji</button>
+       <button *ngIf="!(r.preuzeta || r.otkazana || r.ponistena)" (click)="rezervacijaId=r.rezervacijaID;otkazi_dialog=!otkazi_dialog;" style="color:white" class="btn btn-warning">Otkaži</button>
+       <button *ngIf="!(!r.preuzeta|| r.recenzirano || r.ponistena || r.otkazana || !r.odobrena)" (click)="komentar=''; brojZvjezdica=0; dialog_recenzija=!dialog_recenzija; rezervacijaId= r.rezervacijaID;" class="btn btn-primary" >Recenzija</button>
+       </div>
+       </div>
+     <div class="rezervacija" *ngIf="rezervacije?.length==0">
+       <h5 style="text-align: center">Trenutno nemate kreiranih rezervacija.</h5>
+     </div>
+   </div>
+  </div>
+  <div id="popusti-div">
+    <h5 class="naslov">Moji popusti:</h5>
+    <div id="popusti">
+      <div class="popust" *ngFor="let p of popusti">
+        <label class="popust-polje"><b>ID popusta:</b> {{p.popustID}}</label>
+        <label style="text-align:right;" class="popust-polje"><b>Vrijednost:</b> {{p.procenat}}%</label>
+        <label class="razlog"><b>Razlog:</b> {{p.razlog}}</label>
+      </div>
+      <div class="popust" *ngIf="popusti?.length==0">
+        <h5 style="text-align: center">Trenutno nemate neiskorištenih popusta.</h5>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="dialog_edit" class="modal" tabindex="-1" style="display:block;">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Edit</h5>
+        <button (click)="dialog_edit=!dialog_edit" type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <h5 *ngIf="upozorenje!='';" style="color:red; text-align:center;margin:0;">{{upozorenje}}</h5>
+        <div>
+          <div class="form-row">
+            <div class="form-group">
+              <label style="display:block;">Odaberite profilnu sliku:</label>
+              <img id="profilna" src="{{slikaURL}}">
+              <input accept="image/jpeg" (change)="ucitajSliku()" id="slika" type="file" class="form-control">
+            </div>
+            <div class="form-group">
+              <label >Ime</label>
+              <input (change)="popunjenoPolje($event)" id="ime" [(ngModel)]="ime" type="text" class="form-control" placeholder="Unesite ime">
+            </div>
+            <div class="form-group">
+              <label >Prezime</label>
+              <input (change)="popunjenoPolje($event)"  id="prezime" [(ngModel)]="prezime" type="text" class="form-control"  placeholder="Unesite prezime">
+            </div>
+          </div>
+          <div class="form-group">
+            <label >Datum rođenja</label>
+            <input [(ngModel)]="datumRodjenja" type="date" class="form-control">
+          </div>
+          <div class="form-group">
+            <label >E-mail</label>
+            <input id="email" (change)="postojiEmail(); popunjenoPolje($event)" [(ngModel)]="email" type="email" class="form-control"  placeholder="Unesite email">
+          </div>
+          <div class="form-group">
+            <label >Username</label>
+            <input id="username" (change)="postojiUsername();popunjenoPolje($event)" [(ngModel)]="username" type="text" class="form-control"  placeholder="Unesite username">
+          </div>
+          <div class="form-group">
+            <label>Grad</label>
+            <select id="gradId" [(ngModel)]="gradId" class="form-control">
+              <option *ngFor="let g of gradovi" [ngValue]="g.gradID">{{g.naziv}}</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label >Broj telefona</label>
+            <input id="brojTelefona" (change)="postojiBrojTelefona();popunjenoPolje($event)" [(ngModel)]="brojTelefona" type="text" class="form-control"  placeholder="Format: +38761210000">
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <a (click)="brisanje_naloga_dialog=!brisanje_naloga_dialog" style="display:block; width:100%;color:red;cursor:pointer;">Želite izbrisati svoj korisnički nalog?</a>
+        <button (click)="dialog_edit=!dialog_edit" style="border:none;" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Zatvori</button>
+        <button (click)="editKorisnik()" style="background-color: rgb(115,82,1); border:none;" type="button" class="btn btn-primary">Sačuvaj</button>
+      </div>
+    </div>
+  </div>
+</div>
+<div *ngIf="dialog_recenzija" class="modal" tabindex="-1" style="display:block;">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Recenzija</h5>
+        <button (click)="dialog_recenzija=!dialog_recenzija" type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <div id="zvjezdice">
+          <div *ngIf="brojZvjezdica==0">
+            <span class="fa fa-star" (click)="promijeniBroj(1)"></span>
+            <span class="fa fa-star" (click)="promijeniBroj(2)"></span>
+            <span class="fa fa-star" (click)="promijeniBroj(3)" ></span>
+            <span class="fa fa-star" (click)="promijeniBroj(4)"></span>
+            <span class="fa fa-star" (click)="promijeniBroj(5)"></span>
+          </div>
+          <div *ngIf="brojZvjezdica!=0">
+            <span class="fa fa-star checked" *ngFor="let z of listaObicnih" (click)="promijeniBroj(z)" >
+
+            </span>
+            <span class="fa fa-star" *ngFor="let z of listaDrugih" (click)="promijeniBroj(z)"></span>
+          </div>
+        </div>
+        <h6>Komentar:</h6>
+        <textarea [(ngModel)] ="komentar"></textarea>
+      </div>
+      <div class="modal-footer">
+        <button (click)="dialog_recenzija=!dialog_recenzija" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Zatvori</button>
+        <button (click)="posaljiRecenziju();" style="background-color: rgb(115,82,1); border:none;" type="button" class="btn btn-primary">Pošalji</button>
+      </div>
+    </div>
+  </div>
+</div>
+<div *ngIf="dialog_detalji" class="modal" tabindex="-1" style="display:block;">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Detalji o rezervaciji</h5>
+        <button (click)="dialog_detalji=!dialog_detalji" type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <h6>ID rezervacije: {{rezervacija?.rezervacijaId}}</h6>
+        <h6>Datum rezervacije: {{rezervacija!.datum.toString().split('T')[0]}}</h6>
+        <h6>Vrijeme: {{rezervacija?.vrijeme}}:00</h6>
+        <h6>Trajanje: {{rezervacija?.trajanje}} h</h6>
+        <div *ngIf="rezervacija?.ponistena">
+          <h5 style="color:red;">Rezervacija je odbijena!</h5>
+          <label><b>Razlog:</b></label>
+          <p>{{rezervacija?.komentar}}</p>
+        </div>
+        <h6>Posebne želje:</h6>
+        <textarea readonly>{{rezervacija?.posebneZelje}}</textarea>
+        <h6>Stolovi:</h6>
+        <table class="table">
+          <thead>
+          <tr>
+            <th scope="col">Broj stola</th>
+            <th scope="col">Unutrašnji dio</th>
+            <th scope="col">Pušačka zona</th>
+            <th scope="col">Broj stolica</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let s of rezervacija?.stolovi ?? []">
+            <th scope="row">{{s.brojStola}}</th>
+            <td>{{s.jeUnutra ? 'DA':'NE' }}</td>
+            <td>{{ s.jePusackaZona ? 'DA' : 'NE' }}</td>
+            <td>{{s.brojStolica}}</td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="modal-footer">
+        <button (click)="dialog_detalji=!dialog_detalji" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Zatvori</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="dialog_lozinka" style="display:block" class="modal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Promjena lozinke</h5>
+        <button (click)="dialog_lozinka=!dialog_lozinka" type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div>
+          <h6 style="color:red;text-align:center; width:100%;">{{lozinka_upozorenje}}</h6>
+          <div class="form-group">
+            <label >Trenutna lozinka:</label>
+            <input [(ngModel)]="staraLozinka" type="password" class="form-control" >
+          </div>
+          <div class="form-group">
+            <label>Nova lozinka:</label>
+            <input [(ngModel)]="novaLozinka" type="password" class="form-control" >
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button style="background-color: rgb(115,82,1);border:none;" (click)="promjenaLozinke()" type="button" class="btn btn-primary">Promijeni lozinku</button>
+        <button style="border:none" (click)="dialog_lozinka=!dialog_lozinka" type="button" class="btn btn-secondary" data-dismiss="modal">Odustani</button>
+      </div>
+    </div>
+  </div>
+</div>
+<div *ngIf="dialog_verifikacija_telefon" style="display:block" class="modal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Verifikacija telefona</h5>
+        <button (click)="dialog_verifikacija_telefon=!dialog_verifikacija_telefon" type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div>
+          <h6 style="text-align:center; width:100%;">Vaš verifikacijski kod je poslan na broj telefona!</h6>
+          <div class="form-group">
+            <label >Verifikacijski kod:</label>
+            <input [(ngModel)]="verifikacijski_kod" type="text" class="form-control" >
+          </div>
+          <div class="form-group" style="margin-top:10px;display:flex;">
+            <input style="width:50%;" value="Verifikuj"  (click)="verifikacijaTelefona()" type="button" class="form-control" >
+            <input style="width:50%;" value="Pošalji ponovo" [disabled]="onemogucen_telefon" (click)="otvoriVerifikaciju();" type="button" class="form-control" >
+
+          </div>
+          <h6 style="margin-top:10px;">Preostalo sekundi: {{preostalo}}</h6>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button style="border:none" (click)="dialog_verifikacija_telefon=!dialog_verifikacija_telefon;" type="button" class="btn btn-secondary" data-dismiss="modal">Zatvori</button>
+      </div>
+    </div>
+  </div>
+</div>
+<div *ngIf="otkazi_dialog" style="display:block" class="modal" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" style="margin:0;" >Upozorenje</h5>
+        <button (click)="otkazi_dialog=!otkazi_dialog"  type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <h5 style="color:red;text-align: center;">Da li ste sigurni da želite otkazati rezervaciju?</h5>
+      </div>
+      <div style="border-top:1px solid rgba(128,128,128,0.22); padding:15px;display:flex;justify-content: center;gap:10%;" >
+        <button (click)="otkazi_dialog=!otkazi_dialog;" class="btn btn-danger">Ne</button>
+        <button (click)="izbrisiRezervaciju()" class="btn btn-primary">Da</button>
+      </div>
+    </div>
+  </div>
+</div>
+<div *ngIf="brisanje_naloga_dialog" style="display:block" class="modal" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" style="margin:0;" >Upozorenje</h5>
+        <button (click)="brisanje_naloga_dialog=!brisanje_naloga_dialog"  type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <h5 style="color:red;text-align: center;">Da li ste sigurni da želite trajno izbrisati korisnički nalog?</h5>
+      </div>
+      <div style="border-top:1px solid rgba(128,128,128,0.22); padding:15px;display:flex;justify-content: center;gap:10%;" >
+        <button (click)="brisanje_naloga_dialog=!brisanje_naloga_dialog;" class="btn btn-danger">Ne</button>
+        <button (click)="izbrisiNalog()" class="btn btn-primary">Da</button>
+      </div>
+    </div>
+  </div>
+</div>
+

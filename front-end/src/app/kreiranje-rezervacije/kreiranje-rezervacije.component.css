@@ -1,0 +1,218 @@
+
+#sve {
+  width:60%;
+  margin-left:auto;
+  margin-right:auto;
+  margin-top:20px;
+}
+h2 {
+  text-align: center;
+  color:white;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+#padajuce_liste{
+  display:flex;
+  margin-top:30px;
+  width:fit-content;
+  margin-left:auto;
+  margin-right:auto;
+  flex-direction: row;
+}
+label{
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  color:white;position:relative; top:5px;font-weight: bold;font-size:18px;
+}
+#skica {
+  margin-top:10px;
+  width:80%;
+  margin-left:auto;
+  margin-right:auto;
+  height:500px;
+  background-color: white;
+}
+.izbor {
+  display:flex;
+}
+#unutra{
+  width:100%;
+  height:300px;
+  border-bottom:1px solid black;
+}
+h5 {
+  color:white;
+  width:fit-content;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+#odabir_stolova {
+  margin-left:auto;
+  margin-right:auto;
+  margin-top:20px;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+#legenda_naslov {
+  text-align: left;
+  margin-bottom:10px;
+}
+.skica_slika {
+  width:50px;
+  margin-left:auto;
+  margin-right:auto;
+  display:block;
+  margin-top:5px;
+}
+#pusacka {
+  width:40%;
+  height:270px;
+  border-left:1px solid black;
+  float:right;
+}
+#nepusacka {
+  width:60%;
+  height:270px;
+  float:left;
+}
+#basta {
+  height:200px;
+  width:100%;
+}
+.stol {
+  width:75px;
+  rotate:0deg;
+  border-radius:50%;
+}
+#legenda {
+  margin-top:20px;
+  width:50%;
+}
+#kreiranje {
+  margin-top:20px;
+  width:50%;
+}
+.slike {
+  display:flex;
+  justify-content: center;
+  width:100%;
+  flex-wrap: wrap;
+}
+#kreiranje_rezervacije_div {
+  width:50%;
+  margin-top:20px;
+}
+#posebne_zelje_naslov {
+  text-align: left;
+  margin-bottom:10px;
+}
+textarea {
+  height:150px;
+  margin-bottom:30px;
+}
+#buttoni {
+  display:flex;
+  justify-content: center;
+  gap:30%;
+}
+input, select {
+  width:fit-content;
+  margin-left:10px;
+}
+label{
+  margin-left:10px;
+}
+#podnozje {
+  display:flex;
+  flex-direction: row;
+}
+@media (max-width: 1250px) {
+  #skica {
+    width:100%;
+  }
+}
+@media (max-width:970px) {
+  #sve {
+    width:80%;
+  }
+}
+@media (max-width:720px) {
+  #sve {
+    width:90%;
+  }
+}
+@media (max-width:660px) {
+  #padajuce_liste {
+    flex-direction: column;
+  }
+  .izbor {
+    margin-top:10px;
+    width:fit-content;
+    margin-left:auto;
+    margin-right:auto;
+  }
+  .stol {
+    width:60px;
+  }
+  #legenda {
+    width:100%;
+  }
+  #kreiranje_rezervacije_div {
+    width:100%;
+  }
+  #podnozje {
+    flex-direction: column;
+    margin-bottom:20px;
+  }
+  #legenda_slike {
+    display:flex;
+    flex-wrap: wrap;
+  }
+  #legenda_slike p {
+    width:50%;
+    text-align: center;
+  }
+  #padajuce_liste{
+    margin-top:10px;
+  }
+
+}
+@media (max-width:510px) {
+  .stol {
+    width:50px;
+  }
+  .skica_slika {width:40px;}
+}
+@media (max-width:450px) {
+  #skica {
+    width:95%;
+  }
+}
+@media (max-width:430px) {
+  #legenda_slike p {
+    width:100%;
+    text-align: left;
+  }
+  #podnozje {
+    flex-direction: column-reverse;
+  }
+}
+@media (max-width:400px) {
+  #datum {
+    position:relative;
+    width:180px;
+    margin-left:0;
+  }
+  #datum_input {
+    margin-left:0;
+    position:relative;
+    right:10px;
+  }
+}
+@media (max-width:380px) {
+  #datum {
+    font-size:16px;
+    width:160px;
+  }
+  #datum_input {
+    width:140px;
+  }
+}
+
+

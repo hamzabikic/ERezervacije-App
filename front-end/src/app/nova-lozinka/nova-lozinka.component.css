@@ -1,0 +1,79 @@
+button {
+  border:0;
+  padding-right:15px;
+  padding-left:15px;
+  padding-top:5px;
+  padding-bottom:5px;
+  font-weight: bolder;
+  border-radius:5%;
+  background-color: rgb(115,82,1);
+  color:white;
+}
+#login-div{
+  width:529px;
+  height:329px;
+  background-color: white;
+  position:fixed;
+  left:calc(50% - 264.5px);
+  top:calc(50% - 164.5px);
+}
+#login-div img {
+  height:70px;
+  width:240px;
+  display:block;
+  margin:auto;
+  margin-top:10px;
+  margin-bottom:10px;
+}
+.inputi{
+  margin:auto;
+  width:fit-content;
+  margin-top:20px;
+}
+label{
+  margin-right:5px;
+  color:rgb(115,82,1);
+  width:110px;
+  text-align:right;
+}
+button {
+  margin:auto;
+  display:block;
+  margin-top:30px;
+  margin-bottom:5px;
+}
+
+#greska {
+  margin-top:0;
+  margin-bottom:0;
+  height:15px;
+  color:darkred;
+  width:90%;
+  text-align: center;
+  margin-left:auto;
+  margin-right:auto;
+  display:block;
+}
+@media (max-width:649px) {
+  #login-div{
+    width:450px;
+    left:calc(50% - 225px);
+  }
+}
+@media (max-width:480px) {
+  #login-div{
+    width:400px;
+    left:calc(50% - 200px);
+    height:280px;
+    top:calc(50% - 140px);
+  }
+  #login-div img {
+    height:60px;
+    width:200px;
+    margin-bottom:0;
+  }
+  .inputi{
+    margin-top:15px;
+  }
+}
+

@@ -1,0 +1,15 @@
+<div id="login-div">
+<img src="assets/logo-no-background.png" routerLink="">
+  <a id="greska" >{{greska}}</a>
+  <div class="inputi">
+  <label>Username:</label>
+  <input (keydown.enter)="prijava()" [(ngModel)]="username">
+</div>
+<div class="inputi">
+  <label>Password:</label>
+  <input (keydown.enter)="prijava()" [(ngModel)]="password" type="password">
+</div>
+  <button (click)="prijava()">Prijava</button>
+  <a style="margin-top:10px;" href="/#/registracija"(click)="otvoriReg()">Nemate korisnicki nalog?</a>
+  <a href="/#/zaboravljena-lozinka">Zaboravili ste lozinku?</a>
+</div>

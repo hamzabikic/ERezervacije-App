@@ -1,0 +1,202 @@
+<div id="sve" xmlns="http://www.w3.org/1999/html">
+  <h5 style="color:white; margin-top:40px;">Upravljanje rezervacijama</h5>
+  <div id="iznad_rezervacija">
+    <div>
+  <label style="color:white;">ID rezervacije:</label>
+  <input  [(ngModel)]="id" (input)="getRezervacije()">
+      </div>
+    <button (click)="popuniPreuzmi(); preuzmiStolove();" id="nova_rez" class="btn btn-light"><b>Nova rezervacija</b></button>
+  </div>
+  <table *ngIf="vidljiva_tabela" class="table">
+    <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Kreirao</th>
+      <th scope="col">Broj telefona</th>
+      <th scope="col">Datum</th>
+      <th scope="col">Vrijeme</th>
+      <th scope="col">Odobrena</th>
+      <th scope="col">Preuzeta</th>
+      <th scope="col">Otkazana</th>
+      <th scope="col">Odbijena</th>
+      <th scope="col"></th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let r of rezervacije">
+      <th scope="row">{{r.rezervacijaID}}</th>
+      <td>{{ r.imePrezime.length>25? r.imePrezime.substring(0,25) +"..." : r.imePrezime}}</td>
+      <td>{{r.brojTelefona}}</td>
+      <td>{{r.datumRezervacije}}</td>
+      <td>{{r.vrijemeRezervacije}}</td>
+      <th [ngStyle]="boolstyle(r.odobrena)">{{r.odobrena ? "DA" : "NE"}}</th>
+      <th [ngStyle]="boolstyle(r.preuzeta)">{{r.preuzeta? "DA" : "NE" }}</th>
+      <th [ngStyle]="boolstyle(r.otkazana)">{{r.otkazana?"DA":"NE"}}</th>
+      <th [ngStyle]="boolstyle(r.ponistena)">{{r.ponistena?"DA":"NE"}}</th>
+      <td>
+        <button style="color:white;" (click)="preuzmiDetalje(r.rezervacijaID)" class="btn btn-info">Detalji</button>
+        <button (click)="odobriRezervaciju(r.rezervacijaID)" *ngIf="!(r.preuzeta|| r.odobrena || r.otkazana || r.ponistena)" class="btn btn-primary" >Odobri</button>
+        <button *ngIf="!(r.preuzeta || r.odobrena || r.otkazana || r.ponistena)" (click)="dialog_otkaz = !dialog_otkaz; rezervacijaId= r.rezervacijaID;razlog='';" style="color:white;" class="btn btn-warning">Odbij</button>
+        <button (click)="oznaciPreuzetom(r.rezervacijaID)" *ngIf="!(r.preuzeta || !r.odobrena || r.otkazana || r.ponistena)" class="btn btn-success">Preuzeta</button>
+        <button (click)="rezervacijaId=r.rezervacijaID;upozorenje_brisanje=!upozorenje_brisanje;" class="btn btn-danger">Obriši</button>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+  <div *ngIf="!vidljiva_tabela" style="margin-top:10px;margin-bottom:20px;">
+    <div id="rezervacije-mobile">
+      <div *ngFor="let r of rezervacije" class="rezervacija-mobile" style="display:flex; flex-wrap:wrap; " >
+        <div id="podaci">
+          <label class="gost-polje"><b>ID rezervacije:</b> {{r.rezervacijaID}}</label>
+          <label class="gost-polje"><b>Kreirao:</b> {{r.imePrezime}}</label>
+          <label class="gost-polje"><b>Broj telefona:</b> {{r.brojTelefona}}</label>
+          <label class="gost-polje"><b>Datum:</b> {{r.datumRezervacije.toString().split("T")[0]}}</label>
+          <label class="gost-polje"><b>Vrijeme:</b> {{r.vrijemeRezervacije}}</label>
+          <label class="gost-polje"><b>Odobrena:</b> <span [ngStyle]="boolstyle(r.odobrena)"> <b> {{r.odobrena ? "DA" : "NE"}}</b></span></label>
+          <label class="gost-polje"><b>Preuzeta:</b> <span [ngStyle]="boolstyle(r.preuzeta)"> <b> {{r.preuzeta ? "DA" : "NE"}}</b></span></label>
+          <label class="gost-polje"><b>Otkazana:</b> <span [ngStyle]="boolstyle(r.otkazana)"> <b> {{r.otkazana ? "DA" : "NE"}}</b></span></label>
+          <label class="gost-polje"><b>Odbijena:</b> <span [ngStyle]="boolstyle(r.ponistena)"> <b> {{r.ponistena ? "DA" : "NE"}}</b></span></label>
+        </div>
+        <div id="buttoni">
+          <button style="color:white;" (click)="preuzmiDetalje(r.rezervacijaID)" class="btn btn-info">Detalji</button>
+          <button (click)="odobriRezervaciju(r.rezervacijaID)" *ngIf="!(r.preuzeta|| r.odobrena || r.otkazana || r.ponistena)" class="btn btn-primary" >Odobri</button>
+          <button *ngIf="!(r.preuzeta || r.odobrena || r.otkazana || r.ponistena)" (click)="dialog_otkaz = !dialog_otkaz; rezervacijaId= r.rezervacijaID;razlog='';" style="color:white;" class="btn btn-warning">Odbij</button>
+          <button (click)="oznaciPreuzetom(r.rezervacijaID)" *ngIf="!(r.preuzeta || !r.odobrena || r.otkazana || r.ponistena)" class="btn btn-success">Preuzeta</button>
+          <button (click)="rezervacijaId=r.rezervacijaID;upozorenje_brisanje=!upozorenje_brisanje;" class="btn btn-danger">Obriši</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div *ngIf="dialog_detalji" class="modal" tabindex="-1" style="display:block;">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 style="margin:0;" class="modal-title">Detalji o rezervaciji</h5>
+        <button (click)="dialog_detalji=!dialog_detalji" type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <h6>ID rezervacije: {{rezervacija?.rezervacijaId}}</h6>
+        <h6>Datum rezervacije: {{rezervacija!.datum.toString().split('T')[0]}}</h6>
+        <h6>Vrijeme: {{rezervacija?.vrijeme}}:00</h6>
+        <h6>Trajanje: {{rezervacija?.trajanje}} h</h6>
+        <h6>Posebne želje:</h6>
+        <textarea style="width:100%;height:100px;" readonly>{{rezervacija?.posebneZelje}}</textarea>
+        <h6>Stolovi:</h6>
+        <table class="table">
+          <thead>
+          <tr>
+            <th scope="col">Broj stola</th>
+            <th scope="col">Unutrašnji dio</th>
+            <th scope="col">Pušačka zona</th>
+            <th scope="col">Broj stolica</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let s of rezervacija?.stolovi ?? []">
+            <th scope="row">{{s.brojStola}}</th>
+            <td>{{s.jeUnutra ? 'DA':'NE' }}</td>
+            <td>{{ s.jePusackaZona ? 'DA' : 'NE' }}</td>
+            <td>{{s.brojStolica}}</td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="modal-footer">
+        <button (click)="dialog_detalji=!dialog_detalji" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Zatvori</button>
+      </div>
+    </div>
+  </div>
+</div>
+<div *ngIf="dialog_otkaz" style="display:block" class="modal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 style="margin:0" class="modal-title">Odbijanje rezervacije</h5>
+        <button (click)="dialog_otkaz=!dialog_otkaz" type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <h5>Razlog odbijanja rezervacije:</h5>
+        <textarea style="width:100%;height:100px" [(ngModel)]="razlog"></textarea>
+      </div>
+      <div class="modal-footer">
+        <button (click)="izbrisiRezervaciju()" type="button" class="btn btn-danger">Odbij rezervaciju</button>
+        <button (click)="dialog_otkaz=!dialog_otkaz" type="button" class="btn btn-secondary" data-dismiss="modal">Odustani</button>
+      </div>
+    </div>
+  </div>
+</div>
+<div *ngIf="upozorenje_brisanje" style="display:block" class="modal" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" style="margin:0;" >Upozorenje</h5>
+        <button (click)="upozorenje_brisanje=!upozorenje_brisanje" type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <h5 style="color:red;text-align: center;">Da li ste sigurni da želite obrisati rezervaciju?</h5>
+      </div>
+      <div style="border-top:1px solid rgba(128,128,128,0.22); padding:15px;display:flex;justify-content: center;gap:10%;" >
+        <button (click)="upozorenje_brisanje=!upozorenje_brisanje;" class="btn btn-danger">Ne</button>
+        <button (click)="obrisiRezervaciju(rezervacijaId)" class="btn btn-primary">Da</button>
+      </div>
+    </div>
+  </div>
+</div>
+<div *ngIf="dialog_nova" style="display:block" class="modal" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header" >
+        <h5 style="margin:0" class="modal-title">Nova rezervacija</h5>
+        <button (click)="dialog_nova=!dialog_nova" type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <h5 *ngIf="greska!='';" style="color:red; text-align:center;margin:0;">{{greska}}</h5>
+        <div>
+          <div class="form-group">
+            <label >Ime i prezime gosta:</label>
+            <input [(ngModel)]="nova!.imePrezime" type="text" class="form-control">
+          </div>
+          <div class="form-group">
+            <label >Broj telefona:</label>
+            <input [(ngModel)]="nova!.brojTelefona" type="text" class="form-control">
+          </div>
+          <div class="form-group">
+            <label >Datum rezervacije:</label>
+            <input (change)="preuzmiStolove(); nova!.stolovi=[];" [(ngModel)]="datumRezervacije" type="date" class="form-control">
+          </div>
+          <div class="form-group">
+            <label >Od:</label>
+            <select (change)="preuzmiStolove(); nova!.stolovi=[];" [(ngModel)]="odSati"  class="form-control">
+              <option *ngFor="let s of odLista" [ngValue]="s" >{{formatirajBroj(s)}}:00</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label >Do:</label>
+            <select (change)="preuzmiStolove(); nova!.stolovi=[];" [(ngModel)]="doSati"  class="form-control">
+              <option *ngFor="let s of doLista" [ngValue]="s">{{formatirajBroj(s)}}:00</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label >Odaberi stolove:</label>
+            <select style="height:150px;" multiple [(ngModel)]="nova!.stolovi" class="form-control">
+              <option *ngFor="let s of slobodniStolovi" [ngValue]="s.stolID" >
+                Stol: {{s.brojStola}} , Stolice: {{s.brojStolica}}, Pusenje: {{s.jePusackaZona? "DA":"NE"}},
+               Terasa: {{!s.jeUnutra ? "DA":"NE"}}</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label >Napomena:</label>
+            <textarea style="height:100px;" [(ngModel)]="nova!.posebneZelje" type="text" class="form-control"></textarea>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button style="border:none" (click)="dialog_nova=!dialog_nova" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Zatvori</button>
+        <button (click)="dodajRezervaciju()" id="sacuvaj-btn2" type="button" class="btn btn-primary">Kreiraj</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+

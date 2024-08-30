@@ -1,0 +1,89 @@
+#registracija-div{
+  width:529px;
+  height:fit-content;
+  background-color: white;
+  position:fixed;
+  left:calc(50% - 264.5px);
+  top:calc(50% - 250px);
+  padding-bottom:20px;
+}
+#registracija-div img {
+  height:70px;
+  width:240px;
+  display:block;
+  margin:auto;
+  margin-top:10px;
+  margin-bottom:15px;
+  cursor:pointer;
+}
+.inputi{
+  margin:auto;
+  width:fit-content;
+  margin-top:10px;
+}
+label {
+  width:120px;
+  text-align:right;
+  margin-right:5px;
+}
+input {
+  width:170px;
+}
+select {
+  width:170px;
+}
+#registracija-div button {
+  margin:auto;
+  display:block;
+  margin-top:20px;
+}
+button {
+  border:0;
+  padding-left:15px;
+  padding-right:15px;
+  padding-top:5px;
+  padding-bottom:5px;
+  font-weight: bolder;
+  border-radius:5%;
+  background-color: rgb(115,82,1);
+  color:white;
+}
+a {
+  display:block;
+  margin:auto;
+  margin-top:20px;
+  width:100%;
+  color:blue;
+  cursor:pointer;
+}
+#greska{
+margin-top:0;
+margin-bottom:0;
+height:fit-content;
+color:darkred;
+text-align: center;
+}
+@media (max-width:580px) {
+  #registracija-div{
+    width:429px;
+    left:calc(50% - 214.5px);
+  }
+}
+@media (max-width:490px) {
+  #registracija-div{
+    width:379px;
+    left:calc(50% - 189.5px);
+  }
+  #registracija-div img {
+    height:60px;
+    width:210px;
+    margin-bottom:0;
+  }
+}
+@media (max-width: 399px) {
+  #registracija-div{
+    width:100%;
+    left:0;
+    right:0;
+  }
+}

@@ -1,0 +1,22 @@
+<header *ngIf="auth.isPrijavljen()" style="display:flex;">
+  <img routerLink="" src="assets/logo-no-background.png">
+  <span *ngIf="mali_navbar" (click)="otvoren_mali=!otvoren_mali" id="tri_crte">≡</span>
+  <nav [ngStyle]="mali_nav_style()">
+    <span *ngIf="mali_navbar" (click)="otvoren_mali=!otvoren_mali">✖</span>
+    <ul >
+      <li (click)=osvjezi() *ngIf="auth.isGost()"><img routerLink="/kreiranje-rezervacije" style="width:50px;height:50px" src="https://media.istockphoto.com/id/1271092175/vector/order-list-line-flat-vector-icon.jpg?s=612x612&w=0&k=20&c=LtuD2A73pkUi6yRkGvKCWNAZN_5ILM00aPk6Dh0BPko="><a href="/#/kreiranje-rezervacije">Nova rezervacija</a></li>
+      <li (click)=osvjezi() *ngIf="auth.isGost()"><img routerLink="/moj-nalog-gost" style="width:50px;height:50px" src="{{MojConfig.adresa_servera+'GetProfilnaById?id='+auth.getId()}}"><a href="/#/moj-nalog-gost">{{auth.getIme()}}</a></li>
+      <li (click)=osvjezi() *ngIf="auth.isManager()"><img routerLink="/manager/gosti" style="width:50px;height:50px" src="/assets/gosti.jpg"><a href="/#/manager/gosti">Gosti</a></li>
+      <li (click)=osvjezi() *ngIf="auth.isManager()"><img routerLink="/manager/hostese" style="width:50px;height:50px" src="https://media.istockphoto.com/id/1372310054/vector/letter-h-icon-with-long-shadow-on-blank-background-flat-design.jpg?s=612x612&w=0&k=20&c=EVnbrWi8VaCu-g2ZXh4563117sSMOM24CHCAKhaJLMg="><a href="/#/manager/hostese">Hostese</a></li>
+      <li (click)=osvjezi() *ngIf="auth.isManager()"><img routerLink="/manager/rezervacije" style="width:50px;height:50px" src="https://media.istockphoto.com/id/1271092175/vector/order-list-line-flat-vector-icon.jpg?s=612x612&w=0&k=20&c=LtuD2A73pkUi6yRkGvKCWNAZN_5ILM00aPk6Dh0BPko="><a href="/#/manager/rezervacije">Rezervacije</a></li>
+      <li (click)=osvjezi() *ngIf="auth.isManager()"><img routerLink="/manager/admin-panel" style="width:50px;height:50px" src="https://static.vecteezy.com/system/resources/thumbnails/005/005/791/small/user-icon-in-trendy-flat-style-isolated-on-grey-background-user-symbol-for-your-web-site-design-logo-app-ui-illustration-eps10-free-vector.jpg"><a href="/#/manager/admin-panel">Admin Panel</a></li>
+      <li (click)=osvjezi() *ngIf="auth.isHostesa()"><img routerLink="/moj-nalog-hostesa" style="width:50px;height:50px" src="{{MojConfig.adresa_servera+'GetProfilnaById?id='+auth.getId()}}"><a href="/#/moj-nalog-hostesa">{{auth.getIme()}}</a></li>
+      <li (click)=osvjezi() *ngIf="auth.isManager()"><img routerLink="/moj-nalog-manager" style="width:50px;height:50px" src="{{MojConfig.adresa_servera+'GetProfilnaById?id='+auth.getId()}}"><a href="/#/moj-nalog-manager">{{auth.getIme()}}</a></li>
+      <li><img (click)="odjava()" style="width:50px;height:50px" src="https://static-00.iconduck.com/assets.00/logout-icon-468x512-z98uc79c.png"><a (click)="odjava()">Odjavi me</a></li>
+    </ul>
+  </nav>
+</header>
+<router-outlet></router-outlet>
+
+
+

@@ -1,0 +1,12 @@
+<div  id="login-div">
+  <img src="assets/logo-no-background.png" routerLink="">
+  <a id="greska" >{{greska}}</a>
+  <div class="inputi">
+    <label>Vaša e-mail adresa:</label>
+    <input (keydown.enter)="zahtjevZaPromjenu()" [(ngModel)]="email">
+  </div>
+  <button (click)="zahtjevZaPromjenu()">Pošalji zahtjev</button>
+  <p>Na Vašu e-mail adresu stići će link za promjenu Vaše lozinke. Ukoliko ne stigne e-mail,
+    pošaljite ponovo zahtjev. U toku 24 sata, moguće je poslati 10 zahtjeva. </p>
+  <a href="/#/login">Povratak na prijavu</a>
+</div>

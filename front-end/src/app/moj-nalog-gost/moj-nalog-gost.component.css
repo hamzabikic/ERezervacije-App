@@ -1,0 +1,281 @@
+#glavni {
+  width:80%;
+  margin-left:auto;
+  margin-right:auto;
+  height:785px;
+  margin-bottom:20px;
+}
+#podaci {
+  width:40%;
+  float:left;
+  height:360px;
+}
+#info {
+  width:100%;
+  background-color: white;
+  padding-top:20px;
+  padding-bottom:30px;
+  height:330px;
+  position:relative;
+}
+.naslov {
+  color:white;
+  text-align:center;
+}
+#glavni {
+  margin-top:30px;
+}
+.pored-polja {
+  width:40%;
+  text-align:right;
+ padding-right:3%;
+  box-sizing: border-box;
+  white-space: nowrap;
+}
+.polje {
+  float:right;
+  width:60%;
+  white-space: nowrap;
+}
+.dugme {
+  border:0;
+  padding-left:15px;
+  padding-right:15px;
+  padding-top:5px;
+  padding-bottom:5px;
+  font-weight: bolder;
+  border-radius:5%;
+
+}
+#izmjena {
+  background-color: rgb(115,82,1);
+  color:white;
+  position:absolute;
+  right:5%;
+  top:280px;
+
+}
+#promjena-btn {
+  position:absolute;
+  left:5%;
+  top:280px;
+  color:white;
+  background-color: red;
+}
+#rezervacije-div {
+  height:785px;
+  width:40%;
+  margin-left:20%;
+  float:right;
+}
+#rezervacije {
+  background-color: white;
+  max-height:755px;
+  height:755px;
+  overflow: scroll;
+}
+#popusti-div {
+  height:405px;
+  width:40%;
+  float:left;
+  margin-top:20px;
+}
+#popusti {
+  height:375px;
+  width:100%;
+  background-color: white;
+  max-height:375px;
+  overflow: scroll;
+}
+.popust-polje {
+  width:50%;
+}
+.razlog {
+  width:100%;
+}
+.popust {
+  border-bottom:1px solid black;
+  padding:10px;
+}
+.rezervacija-polje {
+  width:50%;
+}
+.rezervacija {
+  padding:10px;
+  border-bottom:1px solid black;
+}
+#buttoni {
+  display:flex;
+  justify-content: center;
+  gap:2%;
+  margin-top:10px;
+}
+#zvjezdice span {
+  width:30px;
+  height:30px;
+}
+.checked {
+  color: orange;
+}
+textarea {
+  width:100%;
+  height:100px;
+}
+#upozorenje {
+  color:red;
+}
+td, th {
+  text-align: center;
+}
+#profilna {
+  width:130px;
+  height:120px;
+}
+img {
+  margin-top:10px;
+  margin-bottom:10px;
+}
+@media (max-height: 799px) {
+  #glavni {
+    height:685px;
+  }
+  #rezervacije-div {
+    height:685px;
+  }
+  #rezervacije {
+    max-height:655px;
+    height:655px;
+  }
+  #popusti-div {
+    height:305px;
+  }
+  #popusti {
+    height:275px;
+    max-height:275px;
+  }
+}
+@media (max-width:1380px) {
+  #glavni {
+    width:95%;
+  }
+}
+@media (max-width:1200px) {
+  #podaci {
+    width:45%;
+  }
+  #rezervacije-div {
+    width:45%;
+    margin-left:10%;
+  }
+  #popusti-div {
+    width:45%;
+  }
+}
+@media (max-width:1080px) {
+  #podaci {
+    width:60%;
+    float:none;
+    margin-left:auto;
+    margin-right:auto;
+  }
+  #rezervacije-div {
+    width:60%;
+    margin-left:auto;
+    margin-right:auto;
+    float:none;
+    margin-top:20px;
+  }
+  #popusti-div {
+    width:60%;
+    float:none;
+    margin-left:auto;
+    margin-right:auto;
+  }
+  #glavni {
+    max-height:1590px;
+    height:1590px;
+  }
+  @media (max-height:799px) {
+    #glavni {
+      max-height:1390px;
+      height:1390px;
+    }
+  }
+}
+@media (max-width:800px) {
+  #podaci {
+    width:80%;
+  }
+  #rezervacije-div {
+    width:80%;
+  }
+  #popusti-div {
+    width:80%;
+  }
+}
+@media (max-width:600px) {
+  #podaci {
+    width:100%;
+  }
+  #rezervacije-div {
+    width:100%;
+  }
+  #popusti-div {
+    width:100%;
+  }
+}
+@media (max-width:485px) {
+  .rezervacija-polje{
+    width:100%;
+  }
+  #ver_tel {
+    width:60%
+  }
+  #ver_tel2 {
+    width:40%;
+  }
+  #ver_email {
+    width:60%
+  }
+  #ver_email2 {
+    width:40%;
+  }
+  #info {
+    overflow:scroll;
+  }
+}
+@media (max-width:399px){
+  #glavni {
+    max-height:1610px;
+    height:1610px;
+  }
+  @media (max-height:799px){
+  #glavni {
+    max-height:1410px;
+    height:1410px;
+  } }
+}
+@media (max-width:390px) {
+  .pored-polja {
+    width:45%;
+  }
+  .polje {
+    width:55%;
+  }
+
+}
+@media (max-width:385px) {
+  #izmjena {
+    width:40%;
+
+  }
+  #promjena-btn {
+    width:40%;
+  }
+  #podaci {
+    height:380px;
+  }
+  #info {
+    height:350px;
+  }
+}

@@ -1,0 +1,78 @@
+<div id="sve">
+  <h2 >Kreiranje rezervacije</h2>
+  <div id="padajuce_liste">
+    <div class="izbor">
+    <label id="datum">Datum rezervacije:</label>
+    <input id="datum_input" (change)="preuzmiStolove()" [(ngModel)]="datumRezervacije"  type="date" class="form-control">
+  </div>
+    <div class="izbor">
+    <label>Od:</label>
+    <select (change)="preuzmiStolove()" [(ngModel)]="odSati" class="form-control" >
+      <option *ngFor="let x of odLista" [ngValue]="x">{{formatirajBroj(x)}}:00</option>
+    </select>
+    <label>Do:</label>
+    <select (change)="preuzmiStolove()" [(ngModel)]="doSati" class="form-control" >
+      <option *ngFor="let x of doLista" [ngValue]="x">{{formatirajBroj(x)}}:00</option>
+    </select>
+      </div>
+  </div>
+  <h5 id="odabir_stolova">Odaberi stolove (max. 5):</h5>
+  <div id="skica">
+    <div id="unutra" >
+      <h5 style="width:100%; height:30px; color:black;text-align: center;padding-top:5px;margin:0;"><b>Unutrašnjost</b></h5>
+      <div id="nepusacka">
+        <div>
+        <img class="skica_slika" src="https://cdn.pixabay.com/photo/2012/04/28/20/39/smoking-44470_960_720.png">
+        </div>
+        <div class="slike">
+          <div *ngFor="let s of stolovi_nepusacka">
+            <img (click)="oznaci(s.stolID,$event)" *ngIf="s.brojStolica==2" class="stol" src="/assets/2-stolice.png">
+            <img (click)="oznaci(s.stolID,$event)" *ngIf="s.brojStolica==4" class="stol" src="/assets/4-stolice.png">
+          </div>
+        </div>
+      </div>
+      <div id="pusacka">
+        <div>
+        <img class="skica_slika" src="https://png.pngtree.com/png-vector/20220611/ourmid/pngtree-smoking-area-sign-symbol-place-png-image_4823330.png">
+        </div>
+        <div class="slike">
+          <div *ngFor="let s of stolovi_pusacka">
+            <img (click)="oznaci(s.stolID,$event)" *ngIf="s.brojStolica==2" class="stol" src="/assets/2-stolice.png">
+            <img (click)="oznaci(s.stolID,$event)" *ngIf="s.brojStolica==4" class="stol" src="/assets/4-stolice.png">
+          </div>
+        </div>
+        </div>
+    </div>
+    <div id="basta">
+      <h5 style="color:black;margin-top:5px;width:100%; text-align: center;"><b>Terasa</b></h5>
+      <div class="slike">
+        <div *ngFor="let s of stolovi_terasa">
+          <img (click)="oznaci(s.stolID,$event)" *ngIf="s.brojStolica==2" class="stol" src="/assets/2-stolice.png">
+          <img (click)="oznaci(s.stolID,$event)" *ngIf="s.brojStolica==4" class="stol" src="/assets/4-stolice.png">
+        </div>
+      </div>
+    </div>
+  </div>
+  <p style="color:white; margin-top:10px;margin-bottom:0;">Napomena: Minimalno trajanje rezervacije je 1 sat, a maksimalno 4 sata. Rezervaciju je moguće kreirati
+  najranije 5 dana, a najkasnije 6 sati prije početka iste. Ukoliko želite kreirati rezervaciju koja uključuje više od 5 stolova ili
+    trajanje duže od 4 sata, molimo Vas da pozovete naš objekat.</p>
+  <div id="podnozje">
+  <div id="legenda">
+    <h5 id="legenda_naslov">Legenda:</h5>
+    <div id="legenda_slike">
+    <p style="color:white;"><img class="stol" src="assets/2-stolice.png"> - Stol sa 2 stolice </p>
+    <p style="color:white;"><img class="stol" src="assets/4-stolice.png"> - Stol sa 4 stolice </p>
+    <p style="color:white;"><img class="stol" src="https://cdn.pixabay.com/photo/2012/04/28/20/39/smoking-44470_960_720.png"> - Nepušačka zona</p>
+    <p style="color:white;"><img class="stol" src="https://png.pngtree.com/png-vector/20220611/ourmid/pngtree-smoking-area-sign-symbol-place-png-image_4823330.png"> - Pušačka zona</p>
+    </div>
+    </div>
+  <div id="kreiranje_rezervacije_div" >
+    <h5 id="posebne_zelje_naslov" >Posebne želje (napomena):</h5>
+    <textarea [(ngModel)]="napomena" class="form-control"></textarea>
+    <div id="buttoni">
+    <button>Napravi narudžbu</button>
+    <button (click)="kreirajRezervaciju()">Kreiraj rezervaciju</button>
+    </div>
+  </div>
+  </div>
+</div>

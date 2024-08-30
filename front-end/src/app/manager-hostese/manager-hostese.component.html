@@ -1,0 +1,217 @@
+<div id="sve">
+  <h5 style="color:white; margin-top:40px;">Upravljanje hostesama</h5>
+  <label id="lblime" style="color:white;">Ime i prezime:</label>
+  <input (input)="getHostese()" [(ngModel)]="imePrezime">
+  <button type="button" class="btn btn-info" id="novaHostesa" (click)="popuniHostesu()">Nova hostesa</button>
+  <table class="table" *ngIf="vidljiva_tabela">
+    <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Ime i prezime</th>
+      <th scope="col">Grad</th>
+      <th scope="col">Broj telefona</th>
+        <th *ngIf="strucna_omogucena" scope="col">Stručna sprema</th>
+      <th *ngIf="datum_omogucen" scope="col">Datum zaposlenja</th>
+      <th *ngIf="slika_omogucena" scope="col">Slika</th>
+      <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let x of hostese">
+      <th scope="row">{{x.korisnikID}}</th>
+      <td>{{ (x.ime +" "+x.prezime).length>25? (x.ime +" "+x.prezime).substring(0,25) +"..." : (x.ime +" "+x.prezime)}}</td>
+      <td>{{x.grad.naziv}}</td>
+      <td>{{x.brojTelefona}}</td>
+      <td *ngIf="strucna_omogucena" >{{ x.strucnaSprema.length>25? x.strucnaSprema.substring(0,25) +"..." : x.strucnaSprema}}</td>
+      <td *ngIf="datum_omogucen" >{{x.datumZaposlenja.toString().split('T')[0]}}</td>
+      <td *ngIf="slika_omogucena" > <img style="width:50px;height:50px;" src="{{MojConfig.adresa_servera}}GetProfilnaById?id={{x.korisnikID}}"></td>
+      <td>
+        <button style="color:white" type="button" class="btn btn-info" (click)="dialog_edit=!dialog_edit; editovanje=false;naslov='Detalji';popuni(x);greska='';" >Detalji</button>
+        <button type="button" class="btn btn-primary"  (click)="popuni(x); editovanje=true;naslov='Edit';dialog_edit=!dialog_edit;greska='';" >Uredi</button>
+        <button style="color:white" type="button" class="btn btn-warning" (click)="novaLozinka_dialog = !novaLozinka_dialog; korisnikId = x.korisnikID">Nova lozinka</button>
+        <button type="button" class="btn btn-danger" (click)="upozorenje_brisanje=!upozorenje_brisanje;korisnikId=x.korisnikID;">Izbrisi</button>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+  <div *ngIf="!vidljiva_tabela" style="margin-top:10px;margin-bottom:20px;">
+    <div id="gosti">
+      <div *ngFor="let h of hostese" class="gost" style="display:flex; flex-wrap:wrap; " >
+        <div id="podaci">
+          <label class="gost-polje"><b>ID gosta:</b> {{h.korisnikID}}</label>
+          <label class="gost-polje"><b>Ime i prezime:</b> {{h.ime +" " +h.prezime}}</label>
+          <label class="gost-polje"><b>Grad:</b> {{h.grad.naziv}}</label>
+          <label class="gost-polje"><b>Broj telefona:</b> {{h.brojTelefona}}</label>
+          <label class="gost-polje"><b>Stručna sprema:</b> {{h.strucnaSprema}}</label>
+          <label class="gost-polje"><b>Datum zaposlenja:</b> {{h.datumZaposlenja.toString().split("T")[0]}}</label>
+        </div>
+        <div id="slika_mobilni"><img style="width:100px;height:100px;" src="{{MojConfig.adresa_servera}}GetProfilnaById?id={{h.korisnikID}}"></div>
+        <div id="buttoni">
+          <button style="color:white" type="button" class="btn btn-info" (click)="dialog_edit=!dialog_edit; editovanje=false;naslov='Detalji';popuni(h);greska='';" >Detalji</button>
+          <button type="button" class="btn btn-primary"  (click)="popuni(h); editovanje=true;naslov='Edit';dialog_edit=!dialog_edit;greska='';" >Uredi</button>
+          <button style="color:white" type="button" class="btn btn-warning" (click)="novaLozinka_dialog = !novaLozinka_dialog; korisnikId = h.korisnikID">Nova lozinka</button>
+          <button type="button" class="btn btn-danger" (click)="upozorenje_brisanje=!upozorenje_brisanje;korisnikId=h.korisnikID;">Izbrisi</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div *ngIf="dialog_edit" style="display:block" class="modal" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header" >
+        <h5 style="margin:0" class="modal-title">{{ naslov }}</h5>
+        <button (click)="dialog_edit=!dialog_edit" type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <h5 *ngIf="greska!='';" style="color:red; text-align:center;margin:0;">{{greska}}</h5>
+        <div>
+          <div class="form-group">
+            <label *ngIf="editovanje" style="display:block;">Odaberite profilnu sliku:</label>
+            <img class="profilna" src="{{slikaURL}}">
+            <input *ngIf="editovanje" accept="image/jpeg" (change)="ucitajSliku()" id="slika" type="file" class="form-control">
+          </div>
+          <div class="form-group">
+            <label >Ime:</label>
+            <input [disabled]="!editovanje" [(ngModel)]="ime" type="text" class="form-control">
+          </div>
+          <div class="form-group">
+            <label >Prezime:</label>
+            <input [disabled]="!editovanje" [(ngModel)]="prezime" type="text" class="form-control">
+          </div>
+          <div class="form-group">
+            <label >Grad:</label>
+            <select [disabled]="!editovanje" [(ngModel)]="gradId" type="text" class="form-control">
+              <option *ngFor="let g of gradovi" [ngValue]="g.gradID">{{g.naziv}}</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label >Datum rođenja:</label>
+            <input [disabled]="!editovanje" [(ngModel)]="datumRodjenja" type="date" class="form-control">
+          </div>
+          <div class="form-group">
+            <label >Broj telefona:</label>
+            <input [disabled]="!editovanje" [(ngModel)]="brojTelefona" type="text" class="form-control">
+          </div>
+          <div class="form-group">
+            <label >E-mail:</label>
+            <input [disabled]="!editovanje" [(ngModel)]="email" type="text" class="form-control">
+          </div>
+          <div class="form-group">
+            <label >Username:</label>
+            <input [disabled]="!editovanje" [(ngModel)]="username" type="text" class="form-control">
+          </div>
+          <div class="form-group">
+            <label >Datum zaposlenja:</label>
+            <input [disabled]="!editovanje" [(ngModel)]="datumZaposlenja"  type="date" class="form-control">
+          </div>
+          <div class="form-group">
+            <label >Stručna sprema:</label>
+            <input [disabled]="!editovanje" [(ngModel)]="strucnaSprema"  type="text" class="form-control">
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button style="border:none" (click)="dialog_edit=!dialog_edit" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Zatvori</button>
+        <button (click)="sacuvaj()" *ngIf="editovanje" id="sacuvaj-btn" type="button" class="btn btn-primary">Sačuvaj</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="upozorenje_brisanje" style="display:block" class="modal" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" style="margin:0;" >Upozorenje</h5>
+        <button (click)="upozorenje_brisanje=!upozorenje_brisanje" type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <h5 style="color:red;text-align: center;">Da li ste sigurni da želite obrisati hostesu?</h5>
+      </div>
+      <div style="border-top:1px solid rgba(128,128,128,0.22); padding:15px;display:flex;justify-content: center;gap:10%;" >
+        <button (click)="upozorenje_brisanje=!upozorenje_brisanje;" class="btn btn-danger">Ne</button>
+        <button (click)="obrisiHostesu(korisnikId)" class="btn btn-primary">Da</button>
+      </div>
+    </div>
+  </div>
+</div>
+<div *ngIf="novaLozinka_dialog" style="display:block" class="modal" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" style="margin:0;" >Upozorenje</h5>
+        <button (click)="novaLozinka_dialog=!novaLozinka_dialog"  type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <h5 style="color:red;text-align: center;">Da li ste sigurni da želite resetovati lozinku za hostesu?</h5>
+      </div>
+      <div style="border-top:1px solid rgba(128,128,128,0.22); padding:15px;display:flex;justify-content: center;gap:10%;" >
+        <button (click)="novaLozinka_dialog=!novaLozinka_dialog;" class="btn btn-danger">Ne</button>
+        <button (click)="resetujLozinku(korisnikId)" class="btn btn-primary">Da</button>
+      </div>
+    </div>
+  </div>
+</div>
+<div *ngIf="dialog_nova" style="display:block" class="modal" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header" >
+        <h5 style="margin:0" class="modal-title">Nova hostesa</h5>
+        <button (click)="dialog_nova=!dialog_nova" type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <h5 *ngIf="greska!='';" style="color:red; text-align:center;margin:0;">{{greska}}</h5>
+        <div>
+          <div class="form-group">
+            <label style="display:block;">Odaberite profilnu sliku:</label>
+            <img class="profilna" src="{{novaSlikaURL}}">
+            <input  accept="image/jpeg" (change)="ucitajNovuSliku()" id="novaSlika" type="file" class="form-control">
+          </div>
+          <div class="form-group">
+            <label >Ime:</label>
+            <input [(ngModel)]="hostesa!.ime" type="text" class="form-control">
+          </div>
+          <div class="form-group">
+            <label >Prezime:</label>
+            <input  [(ngModel)]="hostesa!.prezime" type="text" class="form-control">
+          </div>
+          <div class="form-group">
+            <label >Grad:</label>
+            <select [(ngModel)]="hostesa!.gradID"  class="form-control">
+              <option *ngFor="let g of gradovi" [ngValue]="g.gradID">{{g.naziv}}</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label >Datum rođenja:</label>
+            <input [(ngModel)]="hostesa!.datumRodjenja" type="date" class="form-control">
+          </div>
+          <div class="form-group">
+            <label >Broj telefona:</label>
+            <input [(ngModel)]="hostesa!.brojTelefona" type="text" class="form-control">
+          </div>
+          <div class="form-group">
+            <label >E-mail:</label>
+            <input [(ngModel)]="hostesa!.email" type="text" class="form-control">
+          </div>
+          <div class="form-group">
+            <label >Username:</label>
+            <input [(ngModel)]="hostesa!.username" type="text" class="form-control">
+          </div>
+          <div class="form-group">
+            <label >Datum zaposlenja:</label>
+            <input [(ngModel)]="hostesa!.datumZaposlenja"  type="date" class="form-control">
+          </div>
+          <div class="form-group">
+            <label >Stručna sprema:</label>
+            <input [(ngModel)]="hostesa!.strucnaSprema"  type="text" class="form-control">
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button style="border:none" (click)="dialog_nova=!dialog_nova" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Zatvori</button>
+        <button (click)="dodajHostesu()" id="sacuvaj-btn2" type="button" class="btn btn-primary">Dodaj</button>
+      </div>
+    </div>
+  </div>
+</div>

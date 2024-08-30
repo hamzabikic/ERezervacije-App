@@ -1,0 +1,181 @@
+<div id="glavni">
+
+  <div id="podaci">
+    <h5 class="naslov">Podaci o nalogu:</h5>
+    <div id="info">
+      <label class="pored-polja"> <b>Ime:</b></label>
+      <div class="polje">{{korisnik!.ime}}</div>
+      <label class="pored-polja"> <b>Prezime:</b></label>
+      <div class="polje">{{korisnik!.prezime}}</div>
+      <label class="pored-polja"> <b>Datum rođenja:</b></label>
+      <div class="polje">{{korisnik!.datumRodjenja.toString().split('T')[0]}}</div>
+      <label class="pored-polja"> <b>Grad:</b></label>
+      <div class="polje">{{korisnik!.grad.naziv}}</div>
+      <label class="pored-polja"> <b>E-mail:</b></label>
+      <div class="polje">{{korisnik!.email}}</div>
+      <label class="pored-polja"> <b>Username:</b></label>
+      <div class="polje">{{korisnik!.username}}</div>
+      <label class="pored-polja"> <b>Broj telefona:</b></label>
+      <div class="polje">{{korisnik!.brojTelefona}}</div>
+      <label class="pored-polja"> <b>Datum zaposlenja:</b></label>
+      <div class="polje">{{korisnik!.datumZaposlenja.toString().split("T")[0]}}</div>
+      <label class="pored-polja"> <b>Stručna sprema:</b></label>
+      <div class="polje">{{korisnik!.strucnaSprema}}</div>
+      <button id="promjena-button" class="dugme" (click)="dialog_lozinka =!dialog_lozinka; novaLozinka='';staraLozinka='';lozinka_upozorenje='';" >Promijeni lozinku</button>
+      <button id="detalji-button" class="dugme" (click)="dialog_edit =!dialog_edit; popuniPolja();greska='';" >Izmijeni podatke</button>
+    </div>
+  </div>
+  <div id="rezervacije-div">
+    <h5 class="naslov">Recenzije:</h5>
+    <div class="pretraga">
+      <label>Datum:</label> <input (input)="preuzmiRecenzije()" type="date"  [(ngModel)]="datumRecenzije">
+    </div>
+    <div id="rezervacije">
+      <div *ngFor="let r of recenzije" class="rezervacija">
+        <label class="rezervacija-polje"><b>ID rezervacije:</b> {{r.rezervacijaId}}</label>
+        <label class="rezervacija-polje"><b>Datum:</b> {{r.datum}}</label>
+        <label class="rezervacija-polje"><b>Vrijeme:</b> {{r.vrijeme}}</label>
+        <label class="rezervacija-polje"><b>Ocjena:</b> {{r.ocjena}}</label>
+        <label style="width:100%;" class="rezervacija-polje"><b>Gost:</b> {{r.imePrezime}}</label>
+        <label style="width:100%;" class="rezervacija-polje"><b>Broj telefona:</b> {{r.brojTelefona}}</label>
+        <div id="buttoni">
+          <button  (click)="preuzmiDetalje(r.recenzijaId);" class="btn btn-info" style="color:white;"  >Detalji</button>
+        </div>
+      </div>
+      <div class="rezervacija" *ngIf="recenzije?.length==0">
+        <h5 style="text-align: center">Trenutno nema recenzija za odabrani datum.</h5>
+      </div>
+    </div>
+  </div>
+
+<div *ngIf="dialog_detalji" class="modal" tabindex="-1" style="display:block;">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Detalji o rezervaciji i recenziji</h5>
+        <button (click)="dialog_detalji=!dialog_detalji" type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <h6>ID rezervacije: {{recenzija?.rezervacijaId}}</h6>
+        <h6>Datum rezervacije: {{recenzija?.datum}}</h6>
+        <h6>Vrijeme: {{recenzija?.vrijeme}}</h6>
+        <h6>Posebne želje:</h6>
+        <textarea readonly>{{recenzija?.posebneZelje}}</textarea>
+        <h6>Stolovi:</h6>
+        <table class="table">
+          <thead>
+          <tr>
+            <th scope="col">Broj stola</th>
+            <th scope="col">Unutrašnji dio</th>
+            <th scope="col">Pušačka zona</th>
+            <th scope="col">Broj stolica</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let s of recenzija?.stolovi ?? []">
+            <th scope="row">{{s.brojStola}}</th>
+            <td>{{s.jeUnutra ? 'DA':'NE' }}</td>
+            <td>{{ s.jePusackaZona ? 'DA' : 'NE' }}</td>
+            <td>{{s.brojStolica}}</td>
+          </tr>
+          </tbody>
+        </table>
+        <h6>Ocjena: <b>{{recenzija?.ocjena}}</b></h6>
+        <textarea readonly>{{recenzija?.komentar}}</textarea>
+      </div>
+      <div class="modal-footer">
+        <button (click)="dialog_detalji=!dialog_detalji" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Zatvori</button>
+      </div>
+    </div>
+  </div>
+</div>
+<div *ngIf="dialog_lozinka" style="display:block" class="modal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Promjena lozinke</h5>
+        <button (click)="dialog_lozinka=!dialog_lozinka" type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div>
+          <h6 style="color:red;text-align:center; width:100%;">{{lozinka_upozorenje}}</h6>
+          <div class="form-group">
+            <label >Trenutna lozinka:</label>
+            <input [(ngModel)]="staraLozinka" type="password" class="form-control" >
+          </div>
+          <div class="form-group">
+            <label>Nova lozinka:</label>
+            <input [(ngModel)]="novaLozinka" type="password" class="form-control" >
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button style="background-color: rgb(115,82,1);border:none;" (click)="promjenaLozinke()" type="button" class="btn btn-primary">Promijeni lozinku</button>
+        <button style="border:none" (click)="dialog_lozinka=!dialog_lozinka" type="button" class="btn btn-secondary" data-dismiss="modal">Odustani</button>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+<div *ngIf="dialog_edit" style="display:block" class="modal" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header" >
+        <h5 style="margin:0" class="modal-title">Edit</h5>
+        <button (click)="dialog_edit=!dialog_edit" type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <h5 *ngIf="greska!='';" style="color:red; text-align:center;margin:0;">{{greska}}</h5>
+        <div>
+          <div class="form-group">
+            <label style="display:block;">Odaberite profilnu sliku:</label>
+            <img id="profilna" src="{{slikaURL}}">
+            <input accept="image/jpeg" (change)="ucitajSliku()" id="slika" type="file" class="form-control">
+          </div>
+          <div class="form-group">
+            <label >Ime:</label>
+            <input [(ngModel)]="manager!.ime" type="text" class="form-control">
+          </div>
+          <div class="form-group">
+            <label >Prezime:</label>
+            <input  [(ngModel)]="manager!.prezime" type="text" class="form-control">
+          </div>
+          <div class="form-group">
+            <label >Grad:</label>
+            <select [(ngModel)]="manager!.gradId"  class="form-control">
+              <option *ngFor="let g of gradovi" [ngValue]="g.gradID">{{g.naziv}}</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label >Datum rodjenja:</label>
+            <input [(ngModel)]="manager!.datumRodjenja" type="date" class="form-control">
+          </div>
+          <div class="form-group">
+            <label >Broj telefona:</label>
+            <input [(ngModel)]="manager!.brojTelefona" type="text" class="form-control">
+          </div>
+          <div class="form-group">
+            <label >Email:</label>
+            <input [(ngModel)]="manager!.email" type="text" class="form-control">
+          </div>
+          <div class="form-group">
+            <label >Username:</label>
+            <input [(ngModel)]="manager!.username" type="text" class="form-control">
+          </div>
+          <div class="form-group">
+            <label >Datum zaposlenja:</label>
+            <input [(ngModel)]="manager!.datumZaposlenja"  type="date" class="form-control">
+          </div>
+          <div class="form-group">
+            <label >Strucna sprema:</label>
+            <input [(ngModel)]="manager!.strucnaSprema"  type="text" class="form-control">
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button style="border:none" (click)="dialog_edit=!dialog_edit" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Zatvori</button>
+        <button (click)="sacuvaj()" style="background-color:rgb(115,82,1);border:none;" id="sacuvaj-btn2" type="button" class="btn btn-primary">Sačuvaj</button>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,40 @@
+#sve {
+  width:90%;
+  margin-top:40px;
+  margin-left:auto;
+  margin-right:auto;
+}
+table {
+
+}
+#dodaj {
+  margin-bottom:10px;
+}
+#detalji {
+  margin-right:10px;
+}
+#ogranicenja-div {
+  width:100%;
+  max-height:600px;
+  background-color: white;
+  height:600px;
+  overflow: scroll;
+  margin-bottom:20px;
+}
+.ogranicenje label {
+  width:100%;
+}
+.ogranicenje {
+  border-bottom:1px solid black;
+  padding:10px;
+}
+#buttoni-div {
+  display:flex;
+  gap:10px;
+  margin-top:10px;
+}
+#dugme {
+  background-color: rgb(115,82,1);
+  border:0;
+}
+

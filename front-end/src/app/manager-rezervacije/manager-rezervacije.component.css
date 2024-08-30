@@ -1,0 +1,104 @@
+#sve {
+  width:90%;
+  margin-left:auto;
+  margin-right:auto;
+  position:relative;
+}
+table {
+  margin-top:10px;
+}
+label {
+  margin-right:10px;
+}
+h5 {
+  margin-bottom:20px;
+}
+table button{
+  margin-right:10px;
+}
+#sacuvaj-btn , #sacuvaj-btn2, #sacuvaj-btn3{
+  background-color: rgb(115,82,1);
+  color:white;
+  border:none;
+}
+.dugme {
+  border:0;
+  padding-left:15px;
+  padding-right:15px;
+  padding-top:5px;
+  padding-bottom:5px;
+  font-weight: bolder;
+  border-radius:5%;
+  background-color: rgb(115,82,1);
+  color:white;
+}
+
+#rezervacije-mobile {
+  background-color: white;
+  max-height:690px;
+  height:690px;
+  overflow: scroll;
+}
+.gost-polje {
+  width:100%;
+}
+.rezervacija-mobile{
+  padding:10px;
+  border-bottom:1px solid black;
+}
+#buttoni {
+  width:100%;
+  display:flex;
+  gap:10px;
+  margin-top:5px;
+}
+th, td {
+  font-size:14px;
+}
+#nova_rez {
+  position:absolute;right:0;top:40px;
+  background-color: white;
+  color:black;
+}
+@media (max-width:1400px) {
+  #sve {
+    width:95%;
+  }
+}
+@media (max-width:1300px) {
+  #sve {
+    width:90%;
+  }
+}
+@media(max-width:529px) {
+  #nova_rez {
+    position:static;
+    width:fit-content;
+  }
+  #iznad_rezervacija {
+    display:flex;
+    flex-direction: column-reverse;
+    gap:10px;
+  }
+}
+@media (max-width:410px) {
+  #sve {
+    width:95%;
+  }
+}
+@media (max-width:385px) {
+  #buttoni {
+    gap:7.5px;
+  }
+}
+@media (max-width:375px) {
+  #buttoni button {
+    font-size: 14px;
+  }
+}
+@media (max-width:350px) {
+  #buttoni {
+    gap:5px;
+  }
+}
+
