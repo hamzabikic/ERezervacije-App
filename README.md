@@ -26,13 +26,13 @@ Username: gost
 
 Password: testtest
 
-Student:
+Hostess:
 
 Username: hostesa
 
 Password: testtest
 
-Profesor:
+Manager:
 
 Username: manager
 
