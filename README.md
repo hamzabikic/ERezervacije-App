@@ -98,6 +98,29 @@ Testing API Endpoints: Utilize a tool like Postman or Swagger UI to test the API
 
 Swagger Integration: Swagger has been integrated into the application to provide interactive API documentation. Once the application is running, navigate to the Swagger endpoint (e.g., http://localhost:5000/swagger) to access the Swagger UI and explore the API endpoints.
 
+# Screenshots
+
+<h4>Computer</h4>
+<img src="/Screenshots/login.png">
+<img src="/Screenshots/registracija.png">
+<img src="/Screenshots/zaboravljenaLozinka.png">
+<img src="/Screenshots/moj-nalog-gost.png">
+<img src="/Screenshots/kreiranje-rezervacije-gost.png">
+<img src="/Screenshots/moj-nalog-hostesa.png">
+<img src="/Screenshots/moj-nalog-manager-dijalog.png">
+<img src="/Screenshots/upravljanje-rezervacijama-manager.png">
+<img src="/Screenshots/upravljanje-gostima-manager.png">
+<img src="/Screenshots/upravljanje-hostesama-manager.png">
+<img src="/Screenshots/upravljanje-stolovima-manager.png">
+<h4>Smartphone</h4>
+<img src="/Screenshots/login-mobilni.png">
+<img src="/Screenshots/moj-nalog-gost-mobilni.png">
+<img src="/Screenshots/moj-nalog-gost-mobilni-2.png">
+<img src="/Screenshots/navbar-mobilni.png">
+<img src="/Screenshots/kreiranje-rezervacije-gost-mobilni.png">
+<img src="/Screenshots/kreiranje-rezervacije-gost-mobilni-2.png">
+<img src="/Screenshots/upravljanje-gostima-manager-mobilni.png">
+
 
 # License
 This project is protected by the "Proprietary No-Use License". See the LICENSE file for more information.
