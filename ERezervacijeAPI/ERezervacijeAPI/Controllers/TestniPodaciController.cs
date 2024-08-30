@@ -1,4 +1,5 @@
 ﻿using ERezervacijeAPI.Data;
+using ERezervacijeAPI.Helpers;
 using ERezervacijeAPI.Klase;
 using Microsoft.AspNetCore.Mvc;
 
@@ -31,12 +32,34 @@ namespace ERezervacijeAPI.Controllers
                 DatumRegistracije = DateTime.Now,
                 Password = "testtest",
                 GradID = opstina1.GradID,
-                Aktivan = false,
+                Aktivan = true,
                 Slika = "profilne-slike/empty.jpg",
                 BrojRezervacija = 0,
                 Username = "gost"
             };
             db.Gosti.Add(gost);
+            db.SaveChanges();
+            var korisnikTelefon = new KorisnikTelefon
+            {
+                BrojIzdavanja = 1,
+                VrijemeIsteka = DateTime.Now.AddMinutes(2),
+                Verifikovan = true,
+                Key = UserKeyGenerator.GenerisiPhoneKey(),
+                GostId = gost.KorisnikID,
+                VrijemePrvogIzdavanja = DateTime.Now
+            };
+            db.KorisnikTelefon.Add(korisnikTelefon);
+            var korisnikEmail = new KorisnikEmail
+            {
+                BrojIzdavanja = 1,
+                VrijemeIsteka = DateTime.Now.AddMinutes(30),
+                Verifikovan = true,
+                Key = UserKeyGenerator.GenerisiKey(),
+                GostId = gost.KorisnikID,
+                VrijemePrvogIzdavanja = DateTime.Now
+            };
+            db.KorisnikEmail.Add(korisnikEmail);
+            db.SaveChanges();
             var hostesa = new Hostesa
             {
                 Ime = "Hostesa",
