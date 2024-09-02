@@ -1,0 +1,17 @@
+var accountSid = "-- ACCOUNT-SID --";
+            var authToken = "-- AUTH-TOKEN --";
+            TwilioClient.Init(accountSid, authToken);
+            var poruka = "Restoran Premija - ERezervacije: ";
+            poruka += text;
+            var messageOptions = new CreateMessageOptions(
+              new PhoneNumber(phoneNumber));
+            messageOptions.MessagingServiceSid = "-- MESSAGING SERVICE SID --";
+            messageOptions.Body = poruka;
+
+            try
+            {
+                var message = MessageResource.Create(messageOptions);
+            }catch(Exception ex )
+            {
+
+            }
